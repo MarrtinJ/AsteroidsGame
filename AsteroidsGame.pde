@@ -1,17 +1,19 @@
-//your variable declarations here
+SpaceShip ship = new SpaceShip();
 public void setup() 
 {
-  //your code here
+  size(500,500);
 }
 public void draw() 
 {
-  //your code here
+  background(0);
+  ship.show();
 }
 class SpaceShip extends Floater  
 {   
     //your code here
-  Spaceship ()
+  SpaceShip ()
   {
+    myColor = 204;
     int corners = 4;
     xCorners = new int[corners];
     yCorners = new int[corners];
@@ -24,16 +26,34 @@ class SpaceShip extends Floater
     xCorners[3] = -9;
     yCorners[3] = 0;
   }
-  abstract public void setX(int x) {myCenterX = x;}  
-  abstract public int getX() {return (int)myCenterX;}
-  abstract public void setY(int y) {myCenterY = y;}   
-  abstract public int getY() {return (int)myCenterY;}
-  abstract public void setDirectionX(double x) {myDirectionX = x;}   
-  abstract public double getDirectionX() {return myDirectionX;}
-  abstract public void setDirectionY(double y) {myDirectionY = y;}
-  abstract public double getDirectionY() {return myDirectionY;}
-  abstract public void setPointDirection(int degrees) {myPointDirection = degrees;}   
-  abstract public double getPointDirection() {return myPointDirection;}
+  public void setX(int x) {myCenterX = x;}  
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y) {myCenterY = y;}   
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}   
+  public double getDirectionX() {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}   
+  public double getPointDirection() {return myPointDirection;}
+
+  public void show ()  //Draws the floater at the current position  
+  {             
+    fill(myColor);   
+    stroke(myColor);    
+    //convert degrees to radians for sin and cos         
+    double dRadians = myPointDirection*(Math.PI/180);                 
+    int xRotatedTranslated, yRotatedTranslated;    
+    beginShape();         
+    for(int nI = 0; nI < corners; nI++)    
+    {     
+      //rotate and translate the coordinates of the floater using current direction 
+      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
+      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
+      vertex(xRotatedTranslated,yRotatedTranslated);    
+    }   
+    endShape(CLOSE);  
+  } 
 
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
