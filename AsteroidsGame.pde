@@ -8,6 +8,7 @@ public void setup()
     nightSky[i] = new Star();
   }
 }
+
 public void draw() 
 {
   background(0);
@@ -19,7 +20,6 @@ public void draw()
   ship.move();
 }
 
-
 class Star
 {
   private int myX, myY;
@@ -29,9 +29,10 @@ class Star
     myX = (int)(Math.random()*500);
     myY = (int)(Math.random()*500);
   }
+
   public void show()
   {
-    fill(204, 0, 153);
+    fill((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
     noStroke();
     beginShape();
     vertex(myX, myY - 2);
@@ -161,7 +162,6 @@ class SpaceShip extends Floater
 
   public void setPointDirection(int degrees) {myPointDirection = degrees;}   
   public double getPointDirection() {return myPointDirection;}
-
 }
 
 void keyPressed()
@@ -184,3 +184,11 @@ void keyPressed()
     ship.setPointDirection((int)(Math.random()*360));
   }
 }
+
+// class Asteroids extends Floater
+// {
+//   Asteroids()
+//   {
+    
+//   }
+// }
