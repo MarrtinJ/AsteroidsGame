@@ -1,5 +1,7 @@
 SpaceShip ship = new SpaceShip();
 Star [] nightSky = new Star[140];
+Asteroids bob = new Asteroids();
+
 public void setup() 
 {
   size(500,500);
@@ -18,6 +20,8 @@ public void draw()
   }
   ship.show();
   ship.move();
+  bob.show();
+  bob.move();
 }
 
 class Star
@@ -34,6 +38,7 @@ class Star
   {
     fill((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
     noStroke();
+    //stroke((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
     beginShape();
     vertex(myX, myY - 2);
     vertex(myX + 2, myY);
@@ -122,7 +127,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
 
 class SpaceShip extends Floater  
 {   
-    //your code here
+  //your code here
   SpaceShip ()
   {
     myColor = 255;
@@ -185,10 +190,56 @@ void keyPressed()
   }
 }
 
-// class Asteroids extends Floater
-// {
-//   Asteroids()
-//   {
-    
-//   }
-// }
+class Asteroids extends Floater
+{
+  private int rotSpeed;
+  Asteroids()
+  {
+    myColor = 255;
+    myCenterX = (int)(Math.random()*250);
+    myCenterY = (int)(Math.random()*250);
+    rotSpeed = (int)(Math.random()*5) - 2;
+    corners = 6;
+    xCorners = new int[corners];
+    yCorners = new int[corners];
+
+    xCorners[0] = -11;
+    yCorners[0] = -8;
+
+    xCorners[1] = 7;
+    yCorners[1] = -8;
+
+    xCorners[2] = 13;
+    yCorners[2] = 0;
+
+    xCorners[3] = 6;
+    yCorners[3] = 10;
+
+    xCorners[4] = -11;
+    yCorners[4] = 8;
+
+    xCorners[5] = -5;
+    yCorners[5] = 0;
+  }
+
+  public void setX(int x) {myCenterX = x;}  
+  public int getX() {return (int)myCenterX;}
+
+  public void setY(int y) {myCenterY = y;}   
+  public int getY() {return (int)myCenterY;}
+
+  public void setDirectionX(double x) {myDirectionX = x;}   
+  public double getDirectionX() {return myDirectionX;}
+
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}   
+  public double getPointDirection() {return myPointDirection;}
+
+  public void move()
+  {
+    rotate(rotSpeed);
+    super.move();
+  }
+}
