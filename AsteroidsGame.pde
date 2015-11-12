@@ -1,27 +1,35 @@
 SpaceShip ship = new SpaceShip();
 Star [] nightSky = new Star[140];
-Asteroids bob = new Asteroids();
+Asteroids [] ast = new Asteroids[7];
 
 public void setup() 
 {
   size(500,500);
-  for (int i = 0; i < nightSky.length; i++)
+  for (int starI = 0; starI < nightSky.length; starI++)
   {
-    nightSky[i] = new Star();
+    nightSky[starI] = new Star();
+  }
+  for (int astI = 0; astI < ast.length; astI ++)
+  {
+    ast[astI] = new Asteroids();
   }
 }
 
 public void draw() 
 {
   background(0);
-  for (int i = 0; i < nightSky.length; i++)
+  for (int starI = 0; starI < nightSky.length; starI++)
   {
-    nightSky[i].show();
+    nightSky[starI].show();
+  }
+  for (int astI = 0; astI < ast.length; astI ++)
+  {
+    ast[astI].show();
+    ast[astI].move();
   }
   ship.show();
   ship.move();
-  bob.show();
-  bob.move();
+
 }
 
 class Star
@@ -195,31 +203,48 @@ class Asteroids extends Floater
   private int rotSpeed;
   Asteroids()
   {
-    myColor = 255;
-    myCenterX = (int)(Math.random()*250);
-    myCenterY = (int)(Math.random()*250);
-    rotSpeed = (int)(Math.random()*5) - 2;
-    corners = 6;
+    myColor = 128;
+    myCenterX = (int)(Math.random()*500);
+    myCenterY = (int)(Math.random()*500);
+    rotSpeed = (int)(Math.random()*5);
+    myDirectionX = Math.random()*2;
+    myDirectionY = Math.random()*2;
+    if (Math.random() < 0.5)
+    {
+      rotSpeed = -1 * rotSpeed;
+      myDirectionX = -1 * myDirectionX;
+    }
+    if (Math.random() < 0.5)
+    {
+      myDirectionY = -1 * myDirectionY;
+    }
+    corners = 8;
     xCorners = new int[corners];
     yCorners = new int[corners];
 
-    xCorners[0] = -11;
-    yCorners[0] = -8;
+    xCorners[0] = -3;
+    yCorners[0] = 18;
 
-    xCorners[1] = 7;
-    yCorners[1] = -8;
+    xCorners[1] = 6;
+    yCorners[1] = 15;
 
-    xCorners[2] = 13;
-    yCorners[2] = 0;
+    xCorners[2] = 12;
+    yCorners[2] = 6;
 
-    xCorners[3] = 6;
-    yCorners[3] = 10;
+    xCorners[3] = 9;
+    yCorners[3] = -6;
 
-    xCorners[4] = -11;
-    yCorners[4] = 8;
+    xCorners[4] = 3;
+    yCorners[4] = -12;
 
-    xCorners[5] = -5;
-    yCorners[5] = 0;
+    xCorners[5] = -12;
+    yCorners[5] = -3;
+
+    xCorners[6] = -12;
+    yCorners[6] = 6;
+
+    xCorners[7] = -9;
+    yCorners[7] = 12;
   }
 
   public void setX(int x) {myCenterX = x;}  
