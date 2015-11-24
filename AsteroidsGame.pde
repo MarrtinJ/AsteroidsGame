@@ -1,17 +1,25 @@
 SpaceShip ship = new SpaceShip();
+
+boolean wIsPressed = false;
+boolean aIsPressed = false;
+boolean sIsPressed = false;
+boolean dIsPressed = false;
+
 Star [] nightSky = new Star[140];
-Asteroids [] ast = new Asteroids[7];
+// Asteroids [] ast = new Asteroids[7];
+ArrayList <Asteroids> ast;
 
 public void setup() 
 {
+  ast = new ArrayList <Asteroids>();
   size(500,500);
   for (int starI = 0; starI < nightSky.length; starI++)
   {
     nightSky[starI] = new Star();
   }
-  for (int astI = 0; astI < ast.length; astI ++)
+  for (int astI = 0; astI < 7; astI ++)
   {
-    ast[astI] = new Asteroids();
+    ast.add(new Asteroids());
   }
 }
 
@@ -22,14 +30,21 @@ public void draw()
   {
     nightSky[starI].show();
   }
-  for (int astI = 0; astI < ast.length; astI ++)
-  {
-    ast[astI].show();
-    ast[astI].move();
-  }
+  // for (int astI = 0; astI < ast.size; astI ++)
+  // {
+  //   ast[astI].show();
+  //   ast[astI].move();
+  // }
+  // ast.show();
+  //ast.move();
   ship.show();
   ship.move();
-
+  for(int nI = 0; nI < ast.size(); nI++)
+  {
+    Asteroids astList = ast.get(nI);
+    astList.show();
+    astList.move();
+  }
 }
 
 class Star
@@ -179,14 +194,39 @@ class SpaceShip extends Floater
 
 void keyPressed()
 {
+  if (key == 'w') {wIsPressed = true;}
+  if (key == 'a') {aIsPressed = true;}
+  if (key == 's') {sIsPressed = true;}
+  if (key == 'd') {dIsPressed = true;}
+
   //rotate
-  if(key == 'a') { ship.rotate(-5); }
-  if(key == 'd') { ship.rotate(5); }
+  if(aIsPressed == true) { ship.rotate(-5); }
+  if(dIsPressed == true) { ship.rotate(5); }
 
   //Accelerate/decelerate
-  if(key == 'w') { ship.accelerate(0.15); }
-  if(key == 's') { ship.accelerate(-0.15); }
+  if(wIsPressed == true) { ship.accelerate(0.15); }
+  if(sIsPressed == true) { ship.accelerate(-0.15); }
 
+  if(wIsPressed == true && aIsPressed == true)
+    {
+      ship.rotate(-5);
+      ship.accelerate(0.15);
+    }
+  if(wIsPressed == true && dIsPressed == true)
+    {
+      ship.rotate(5);
+      ship.accelerate(0.15);
+    }
+  if(sIsPressed == true && aIsPressed == true)
+    {
+      ship.rotate(-5);
+      ship.accelerate(-0.15);
+    }
+  if(sIsPressed == true && dIsPressed == true)
+    {
+      ship.rotate(5);
+      ship.accelerate(-0.15);
+    }
   //hyperspace
   if (key =='h')
   {
@@ -195,6 +235,26 @@ void keyPressed()
     ship.setDirectionX(0);
     ship.setDirectionY(0);
     ship.setPointDirection((int)(Math.random()*360));
+  }
+}
+
+void keyReleased()
+{
+  if(key=='w')
+  {
+    wIsPressed = false;
+  }
+  else if (key == 'a')
+  {
+    aIsPressed = false;
+  }
+  else if (key == 's')
+  {
+    sIsPressed = false;
+  }
+  else if (key == 'd')
+  {
+    dIsPressed = false;
   }
 }
 
@@ -209,6 +269,7 @@ class Asteroids extends Floater
     rotSpeed = (int)(Math.random()*5);
     myDirectionX = Math.random()*2;
     myDirectionY = Math.random()*2;
+
     if (Math.random() < 0.5)
     {
       rotSpeed = -1 * rotSpeed;
@@ -218,6 +279,7 @@ class Asteroids extends Floater
     {
       myDirectionY = -1 * myDirectionY;
     }
+
     corners = 8;
     xCorners = new int[corners];
     yCorners = new int[corners];
