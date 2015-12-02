@@ -1,4 +1,5 @@
 SpaceShip ship = new SpaceShip();
+//Bullet bill = new Bullet(ship);
 
 boolean wIsPressed = false;
 boolean aIsPressed = false;
@@ -6,12 +7,13 @@ boolean sIsPressed = false;
 boolean dIsPressed = false;
 
 Star [] nightSky = new Star[140];
-// Asteroids [] ast = new Asteroids[7];
 ArrayList <Asteroids> ast;
+ArrayList <Bullet> blt;
 
 public void setup() 
 {
   ast = new ArrayList <Asteroids>();
+  blt = new ArrayList<Bullet>();
   size(500,500);
   for (int starI = 0; starI < nightSky.length; starI++)
   {
@@ -30,15 +32,10 @@ public void draw()
   {
     nightSky[starI].show();
   }
-  // for (int astI = 0; astI < ast.size; astI ++)
-  // {
-  //   ast[astI].show();
-  //   ast[astI].move();
-  // }
-  // ast.show();
-  //ast.move();
   ship.show();
   ship.move();
+  //bill.show();
+  //bill.move();
   for(int nI = 0; nI < ast.size(); nI++)
   {
     Asteroids astList = ast.get(nI);
@@ -61,7 +58,6 @@ class Star
   {
     fill((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
     noStroke();
-    //stroke((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
     beginShape();
     vertex(myX, myY - 2);
     vertex(myX + 2, myY);
@@ -235,6 +231,41 @@ void keyPressed()
     ship.setDirectionX(0);
     ship.setDirectionY(0);
     ship.setPointDirection((int)(Math.random()*360));
+  }
+  if (key ==' ')
+  {
+    blt.add(new Bullet(ship));
+  }
+}
+
+class Bullet extends Floater
+{
+  Bullet(SpaceShip ship)
+  {
+    myCenterX = ship.getX();
+    myCenterY = ship.getY();
+    myPointDirection = ship.getPointDirection();
+    double dRadians =myPointDirection*(Math.PI/180);
+    myDirectionX = 5 * Math.cos(dRadians) + ship.getDirectionX();
+    myDirectionY = 5 * Math.sin(dRadians) + ship.getDirectionY();
+  }
+  public void setX(int x) {myCenterX = x;}  
+  public int getX() {return (int)myCenterX;}
+
+  public void setY(int y) {myCenterY = y;}   
+  public int getY() {return (int)myCenterY;}
+
+  public void setDirectionX(double x) {myDirectionX = x;}   
+  public double getDirectionX() {return myDirectionX;}
+
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}   
+  public double getPointDirection() {return myPointDirection;}
+  public void show()
+  {
+    ellipse((float)myCenterX, (float)myCenterY, 5, 5);
   }
 }
 
