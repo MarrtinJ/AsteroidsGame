@@ -42,6 +42,12 @@ public void draw()
     astList.show();
     astList.move();
   }
+  for (int nI = 0; nI < blt.size(); nI++)
+  {
+    Bullet bltList = blt.get(nI);
+    bltList.show();
+    bltList.move();
+  }
 }
 
 class Star
