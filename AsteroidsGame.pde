@@ -41,6 +41,14 @@ public void draw()
     Asteroids astList = ast.get(nI);
     astList.show();
     astList.move();
+    for (int bI= 0; bI < blt.size(); bI++)
+    {
+      if (astList.getX() == blt.get(bI).getX() && astList.getY() == blt.get(bI).getY())
+      {
+        ast.remove(bI);
+        blt.remove(bI);
+      }
+    }
   }
   for (int nI = 0; nI < blt.size(); nI++)
   {
@@ -272,6 +280,12 @@ class Bullet extends Floater
   public void show()
   {
     ellipse((float)myCenterX, (float)myCenterY, 5, 5);
+  }
+  public void move ()   //move the floater in the current direction of travel
+  {      
+    //change the x and y coordinates by myDirectionX and myDirectionY       
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;
   }
 }
 
