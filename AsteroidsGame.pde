@@ -1,6 +1,4 @@
 SpaceShip ship = new SpaceShip();
-//Bullet bill = new Bullet(ship);
-
 boolean wIsPressed = false;
 boolean aIsPressed = false;
 boolean sIsPressed = false;
@@ -19,7 +17,7 @@ public void setup()
   {
     nightSky[starI] = new Star();
   }
-  for (int astI = 0; astI < 7; astI ++)
+  for (int astI = 0; astI < 14; astI ++)
   {
     ast.add(new Asteroids());
   }
@@ -34,8 +32,6 @@ public void draw()
   }
   ship.show();
   ship.move();
-  //bill.show();
-  //bill.move();
   for(int nI = 0; nI < ast.size(); nI++)
   {
     Asteroids astList = ast.get(nI);
@@ -43,11 +39,11 @@ public void draw()
     astList.move();
     for (int bI= 0; bI < blt.size(); bI++)
     {
-      if (astList.getX() == blt.get(bI).getX() && astList.getY() == blt.get(bI).getY())
+      if (ast.get(nI).getX() == blt.get(bI).getX() + 10 && ast.get(nI).getY() == blt.get(bI).getY() + 10)
       {
-        ast.remove(bI);
+        ast.remove(nI);
         blt.remove(bI);
-      }
+      }      
     }
   }
   for (int nI = 0; nI < blt.size(); nI++)
@@ -78,6 +74,79 @@ class Star
     vertex(myX, myY + 2);
     vertex(myX - 2, myY);
     endShape(CLOSE);
+  }
+}
+
+class Asteroids extends Floater
+{
+  private int rotSpeed;
+  Asteroids()
+  {
+    myColor = 128;
+    myCenterX = (int)(Math.random()*500);
+    myCenterY = (int)(Math.random()*500);
+    rotSpeed = (int)(Math.random()*5);
+    myDirectionX = Math.random()*2;
+    myDirectionY = Math.random()*2;
+
+    if (Math.random() < 0.5)
+    {
+      rotSpeed = -1 * rotSpeed;
+      myDirectionX = -1 * myDirectionX;
+    }
+    if (Math.random() < 0.5)
+    {
+      myDirectionY = -1 * myDirectionY;
+    }
+
+    corners = 8;
+    xCorners = new int[corners];
+    yCorners = new int[corners];
+
+    xCorners[0] = -3;
+    yCorners[0] = 18;
+
+    xCorners[1] = 6;
+    yCorners[1] = 15;
+
+    xCorners[2] = 12;
+    yCorners[2] = 6;
+
+    xCorners[3] = 9;
+    yCorners[3] = -6;
+
+    xCorners[4] = 3;
+    yCorners[4] = -12;
+
+    xCorners[5] = -12;
+    yCorners[5] = -3;
+
+    xCorners[6] = -12;
+    yCorners[6] = 6;
+
+    xCorners[7] = -9;
+    yCorners[7] = 12;
+  }
+
+  public void setX(int x) {myCenterX = x;}  
+  public int getX() {return (int)myCenterX;}
+
+  public void setY(int y) {myCenterY = y;}   
+  public int getY() {return (int)myCenterY;}
+
+  public void setDirectionX(double x) {myDirectionX = x;}   
+  public double getDirectionX() {return myDirectionX;}
+
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}   
+  public double getPointDirection() {return myPointDirection;}
+
+  public void move()
+  {
+    rotate(rotSpeed);
+    super.move();
   }
 }
 
@@ -252,6 +321,26 @@ void keyPressed()
   }
 }
 
+void keyReleased()
+{
+  if(key=='w')
+  {
+    wIsPressed = false;
+  }
+  else if (key == 'a')
+  {
+    aIsPressed = false;
+  }
+  else if (key == 's')
+  {
+    sIsPressed = false;
+  }
+  else if (key == 'd')
+  {
+    dIsPressed = false;
+  }
+}
+
 class Bullet extends Floater
 {
   Bullet(SpaceShip ship)
@@ -286,98 +375,5 @@ class Bullet extends Floater
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;
-  }
-}
-
-void keyReleased()
-{
-  if(key=='w')
-  {
-    wIsPressed = false;
-  }
-  else if (key == 'a')
-  {
-    aIsPressed = false;
-  }
-  else if (key == 's')
-  {
-    sIsPressed = false;
-  }
-  else if (key == 'd')
-  {
-    dIsPressed = false;
-  }
-}
-
-class Asteroids extends Floater
-{
-  private int rotSpeed;
-  Asteroids()
-  {
-    myColor = 128;
-    myCenterX = (int)(Math.random()*500);
-    myCenterY = (int)(Math.random()*500);
-    rotSpeed = (int)(Math.random()*5);
-    myDirectionX = Math.random()*2;
-    myDirectionY = Math.random()*2;
-
-    if (Math.random() < 0.5)
-    {
-      rotSpeed = -1 * rotSpeed;
-      myDirectionX = -1 * myDirectionX;
-    }
-    if (Math.random() < 0.5)
-    {
-      myDirectionY = -1 * myDirectionY;
-    }
-
-    corners = 8;
-    xCorners = new int[corners];
-    yCorners = new int[corners];
-
-    xCorners[0] = -3;
-    yCorners[0] = 18;
-
-    xCorners[1] = 6;
-    yCorners[1] = 15;
-
-    xCorners[2] = 12;
-    yCorners[2] = 6;
-
-    xCorners[3] = 9;
-    yCorners[3] = -6;
-
-    xCorners[4] = 3;
-    yCorners[4] = -12;
-
-    xCorners[5] = -12;
-    yCorners[5] = -3;
-
-    xCorners[6] = -12;
-    yCorners[6] = 6;
-
-    xCorners[7] = -9;
-    yCorners[7] = 12;
-  }
-
-  public void setX(int x) {myCenterX = x;}  
-  public int getX() {return (int)myCenterX;}
-
-  public void setY(int y) {myCenterY = y;}   
-  public int getY() {return (int)myCenterY;}
-
-  public void setDirectionX(double x) {myDirectionX = x;}   
-  public double getDirectionX() {return myDirectionX;}
-
-  public void setDirectionY(double y) {myDirectionY = y;}
-  public double getDirectionY() {return myDirectionY;}
-
-  public void setPointDirection(int degrees) {myPointDirection = degrees;}   
-  public double getPointDirection() {return myPointDirection;}
-
-  public void move()
-  {
-    rotate(rotSpeed);
-    super.move();
   }
 }
