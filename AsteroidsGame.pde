@@ -37,20 +37,35 @@ public void draw()
     Asteroids astList = ast.get(nI);
     astList.show();
     astList.move();
-    for (int bI= 0; bI < blt.size(); bI++)
-    {
-      if (ast.get(nI).getX() == blt.get(bI).getX() + 10 && ast.get(nI).getY() == blt.get(bI).getY() + 10)
+    if (dist(ship.getX(), ship.getY(), astList.get(nI).getX(), astList.get(nI).getY()) < 20)
       {
-        ast.remove(nI);
-        blt.remove(bI);
-      }      
-    }
+        astList.remove(nI);
+      }
+    // for (int bI= 0; bI < blt.size(); bI++)
+    // {
+    //   if (ast.get(nI).getX() == blt.get(bI).getX() && ast.get(nI).getY() - 18 == blt.get(bI).getY() + 18)
+    //   {
+    //     ast.remove(nI);
+    //     blt.remove(bI);
+    //   }
+    //   if (ast.get(nI).getX() == blt.get(bI).getX() && ast.get(nI).getY() + 18 == blt.get(bI).getY() - 18)
+    //   {
+    //     ast.remove(nI);
+    //     blt.remove(bI);
+    //   }
+    //   if (ast.get(nI).getX() + 12 == blt.get(bI).getX() - 12 && ast.get(nI).getY() == blt.get(bI).getY())
+    //   {
+    //     ast.remove(nI);
+    //     blt.remove(bI);
+    //   }
+    // }
   }
   for (int nI = 0; nI < blt.size(); nI++)
   {
     Bullet bltList = blt.get(nI);
     bltList.show();
     bltList.move();
+    // System.out.println(blt.size());
   }
 }
 
@@ -375,5 +390,13 @@ class Bullet extends Floater
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;
+    for (int i = 0; i < blt.size(); i++)
+    {
+      if(blt.get(i).getX() < 0 || blt.get(i).getX() > width || blt.get(i).getY() < 0 || blt.get(i).getY() > height)
+      {
+        System.out.println(blt.size());
+        blt.remove(i);
+      }
+    }
   }
 }
