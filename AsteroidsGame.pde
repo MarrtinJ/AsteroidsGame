@@ -37,35 +37,26 @@ public void draw()
     Asteroids astList = ast.get(nI);
     astList.show();
     astList.move();
-    if (dist(ship.getX(), ship.getY(), astList.get(nI).getX(), astList.get(nI).getY()) < 20)
+    if (dist(ship.getX(), ship.getY(), astList.getX(), astList.getY()) < 20)
       {
-        astList.remove(nI);
+        ast.remove(nI);
       }
-    // for (int bI= 0; bI < blt.size(); bI++)
-    // {
-    //   if (ast.get(nI).getX() == blt.get(bI).getX() && ast.get(nI).getY() - 18 == blt.get(bI).getY() + 18)
-    //   {
-    //     ast.remove(nI);
-    //     blt.remove(bI);
-    //   }
-    //   if (ast.get(nI).getX() == blt.get(bI).getX() && ast.get(nI).getY() + 18 == blt.get(bI).getY() - 18)
-    //   {
-    //     ast.remove(nI);
-    //     blt.remove(bI);
-    //   }
-    //   if (ast.get(nI).getX() + 12 == blt.get(bI).getX() - 12 && ast.get(nI).getY() == blt.get(bI).getY())
-    //   {
-    //     ast.remove(nI);
-    //     blt.remove(bI);
-    //   }
-    // }
+    for (int bltI = 0; bltI < blt.size(); bltI++)
+    { 
+      if (dist(blt.get(bltI).getX(), blt.get(bltI).getY(), ast.get(nI).getX(), ast.get(nI).getY()) < 20)
+      {
+        ast.remove(nI);
+        System.out.println("ast : " + ast.size());
+        blt.remove(bltI);
+        System.out.println("blt : " + blt.size());
+      }
+    }
   }
   for (int nI = 0; nI < blt.size(); nI++)
   {
     Bullet bltList = blt.get(nI);
     bltList.show();
     bltList.move();
-    // System.out.println(blt.size());
   }
 }
 
@@ -360,6 +351,7 @@ class Bullet extends Floater
 {
   Bullet(SpaceShip ship)
   {
+    myColor = 255;
     myCenterX = ship.getX();
     myCenterY = ship.getY();
     myPointDirection = ship.getPointDirection();
@@ -383,6 +375,7 @@ class Bullet extends Floater
   public double getPointDirection() {return myPointDirection;}
   public void show()
   {
+    fill(myColor);
     ellipse((float)myCenterX, (float)myCenterY, 5, 5);
   }
   public void move ()   //move the floater in the current direction of travel
