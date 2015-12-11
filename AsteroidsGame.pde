@@ -37,18 +37,19 @@ public void draw()
     Asteroids astList = ast.get(nI);
     astList.show();
     astList.move();
-    if (dist(ship.getX(), ship.getY(), astList.getX(), astList.getY()) < 20)
-      {
-        ast.remove(nI);
-      }
+    // if (dist(ship.getX(), ship.getY(), astList.getX(), astList.getY()) < 20)
+    //   {
+    //     ast.remove(nI);
+    //   }
     for (int bltI = 0; bltI < blt.size(); bltI++)
     { 
-      if (dist(blt.get(bltI).getX(), blt.get(bltI).getY(), ast.get(nI).getX(), ast.get(nI).getY()) < 20)
+      if (dist(blt.get(bltI).getX(), blt.get(bltI).getY(), ast.get(nI).getX(), ast.get(nI).getY()) < 18)
       {
         ast.remove(nI);
         System.out.println("ast : " + ast.size());
         blt.remove(bltI);
         System.out.println("blt : " + blt.size());
+        break;
       }
     }
   }
@@ -387,7 +388,6 @@ class Bullet extends Floater
     {
       if(blt.get(i).getX() < 0 || blt.get(i).getX() > width || blt.get(i).getY() < 0 || blt.get(i).getY() > height)
       {
-        System.out.println(blt.size());
         blt.remove(i);
       }
     }
