@@ -37,10 +37,10 @@ public void draw()
     Asteroids astList = ast.get(nI);
     astList.show();
     astList.move();
-    // if (dist(ship.getX(), ship.getY(), astList.getX(), astList.getY()) < 20)
-    //   {
-    //     ast.remove(nI);
-    //   }
+    if (dist(ship.getX(), ship.getY(), astList.getX(), astList.getY()) < 20)
+      {
+        ast.remove(nI);
+      }
     for (int bltI = 0; bltI < blt.size(); bltI++)
     { 
       if (dist(blt.get(bltI).getX(), blt.get(bltI).getY(), ast.get(nI).getX(), ast.get(nI).getY()) < 18)
